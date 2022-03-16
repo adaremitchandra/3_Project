@@ -1,14 +1,30 @@
-import { NavigationContainer } from "@react-navigation/native";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { StyleSheet, FlatList, View, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ProductItemComponent from "../../components/shop/ProductItemComponent";
 import * as cartAction from "../../store/actions/cart";
 
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderButton from "../../components/UI/HeaderButton";
+
 const ProductsOverviewScreen = ({ navigation }) => {
   const products = useSelector((state) => state.products.availableProducts);
 
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Cart"
+            iconName="md-cart"
+            onPress={() => navigation.navigate("Cart")}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <FlatList
