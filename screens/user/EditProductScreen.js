@@ -33,6 +33,7 @@ const EditProductScreen = ({ navigation, route }) => {
         productActions.createProduct(title, description, imageUrl, +price)
       );
     }
+    navigation.goBack();
   }, [title, prodId, imageUrl, price, description]);
 
   useLayoutEffect(() => {
@@ -40,13 +41,7 @@ const EditProductScreen = ({ navigation, route }) => {
       headerTitle: route.params ? "Edit Product" : "Add Product",
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Save"
-            iconName="ios-checkmark"
-            onPress={() => {
-              submitHandler();
-            }}
-          />
+          <Item title="Save" iconName="ios-checkmark" onPress={submitHandler} />
         </HeaderButtons>
       ),
     });
