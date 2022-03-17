@@ -7,6 +7,7 @@ import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import UserProductScreen from "../screens/user/UserProductScreen";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -25,6 +26,7 @@ const MainNav = () => {
           component={ProductsOverviewScreen}
         />
         <Drawer.Screen name="Orders" component={OrdersScreen} />
+        <Drawer.Screen name="UserProduct" component={UserProductScreen} />
       </Drawer.Group>
     </Drawer.Navigator>
   );

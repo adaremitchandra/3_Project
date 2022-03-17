@@ -1,23 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  TouchableOpacity,
-} from "react-native";
 import React from "react";
-import Colors from "../../constants/Colors";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const ProductItemComponent = ({
-  image,
-  title,
-  price,
-  onViewDetail,
-  onAddToCart,
-}) => {
+const ProductItemComponent = ({ image, title, price, onSelect, children }) => {
   return (
-    <TouchableOpacity onPress={onViewDetail}>
+    <TouchableOpacity onPress={onSelect}>
       <View style={styles.product}>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: image }} />
@@ -26,18 +12,7 @@ const ProductItemComponent = ({
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.price}>${price.toFixed(2)}</Text>
         </View>
-        <View style={styles.action}>
-          <Button
-            color={Colors.primary}
-            title="View Details"
-            onPress={onViewDetail}
-          />
-          <Button
-            color={Colors.primary}
-            title="To cart"
-            onPress={onAddToCart}
-          />
-        </View>
+        <View style={styles.action}>{children}</View>
       </View>
     </TouchableOpacity>
   );
