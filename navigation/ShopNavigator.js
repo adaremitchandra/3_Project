@@ -8,6 +8,7 @@ import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import UserProductScreen from "../screens/user/UserProductScreen";
+import EditProductScreen from "../screens/user/EditProductScreen";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -55,6 +56,7 @@ const ShopNavigator = () => {
             })}
           />
           <Stack.Screen name="Cart" component={CartScreen} />
+          <Stack.Screen name="EditProduct" component={EditProductScreen} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
