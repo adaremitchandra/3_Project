@@ -4,12 +4,15 @@ import "react-native-gesture-handler";
 import { combineReducers, createStore } from "redux";
 import productReducer from "./store/reducers/product";
 import cartReducer from "./store/reducers/cart";
+import orderReducer from "./store/reducers/order";
+
 import { Provider } from "react-redux";
 import ShopNavigator from "./navigation/ShopNavigator";
 
 const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
+  orders: orderReducer,
 });
 
 const store = createStore(rootReducer);
