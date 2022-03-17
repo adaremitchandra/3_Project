@@ -33,7 +33,7 @@ const EditProductScreen = ({ navigation, route }) => {
         productActions.createProduct(title, description, imageUrl, +price)
       );
     }
-  }, [title, imageUrl, price, description]);
+  }, [title, prodId, imageUrl, price, description]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
