@@ -47,6 +47,7 @@ const CartScreen = () => {
           keyExtractor={(item) => item.productId}
           renderItem={(itemData) => (
             <CartItem
+              deleteable
               qty={itemData.item.quantity}
               title={itemData.item.productTitle}
               amount={itemData.item.sum}
