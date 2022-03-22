@@ -23,16 +23,25 @@ const ProductsOverviewScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
+  const loadProducts = async () => {
+    console.log("Load");
+    setIsLoading(true);
+    try {
+      await dispatch(productActions.fetchProduct());
+    } catch (err) {
+      SetError(err.message);
+    }
+    setIsLoading(false);
+  };
   useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
-      try {
-        await dispatch(productActions.fetchProduct());
-      } catch (err) {
-        SetError(err.message);
-      }
-      setIsLoading(false);
+    const willFocusSub = navigation.addListener("focus", loadProducts);
+
+    return () => {
+      willFocusSub();
     };
+  }, [loadProducts]);
+
+  useEffect(() => {
     loadProducts();
   }, [dispatch]);
 
