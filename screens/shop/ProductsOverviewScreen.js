@@ -1,17 +1,40 @@
-import React, { useLayoutEffect } from "react";
-import { StyleSheet, FlatList, View, Text, Button } from "react-native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import {
+  StyleSheet,
+  FlatList,
+  View,
+  Text,
+  Button,
+  ActivityIndicator,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ProductItemComponent from "../../components/shop/ProductItemComponent";
 import * as cartAction from "../../store/actions/cart";
 import Colors from "../../constants/Colors";
+import * as productActions from "../../store/actions/product";
 
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
 
 const ProductsOverviewScreen = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, SetError] = useState();
   const products = useSelector((state) => state.products.availableProducts);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      setIsLoading(true);
+      try {
+        await dispatch(productActions.fetchProduct());
+      } catch (err) {
+        SetError(err.message);
+      }
+      setIsLoading(false);
+    };
+    loadProducts();
+  }, [dispatch]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,6 +49,30 @@ const ProductsOverviewScreen = ({ navigation }) => {
       ),
     });
   }, [navigation]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (!isLoading && products.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No Product Found. Maybe adding Some! </Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text>Ada yang error! </Text>
+      </View>
+    );
+  }
 
   return (
     <FlatList
@@ -68,4 +115,10 @@ const ProductsOverviewScreen = ({ navigation }) => {
 
 export default ProductsOverviewScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+});
