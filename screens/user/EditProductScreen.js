@@ -38,16 +38,6 @@ const formReducer = (state, action) => {
 };
 
 const EditProductScreen = (props) => {
-  useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerTitle: props.route.params ? "Edit Product" : "Add Product",
-      headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item title="Save" iconName="ios-checkmark" onPress={submitHandler} />
-        </HeaderButtons>
-      ),
-    });
-  }, [props.navigation]);
   const prodId = props.route.params && props.route.params.id;
   const editedProduct = useSelector((state) =>
     state.products.userProduct.find((prod) => prod.id === prodId)
@@ -79,7 +69,7 @@ const EditProductScreen = (props) => {
     // }
     if (editedProduct) {
       dispatch(
-        productsActions.updateProduct(
+        productActions.updateProduct(
           prodId,
           formState.inputValues.title,
           formState.inputValues.description,
@@ -110,6 +100,17 @@ const EditProductScreen = (props) => {
     },
     [dispatchFormState]
   );
+
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerTitle: props.route.params ? "Edit Product" : "Add Product",
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item title="Save" iconName="ios-checkmark" onPress={submitHandler} />
+        </HeaderButtons>
+      ),
+    });
+  }, [props.navigation, submitHandler]);
 
   return (
     <KeyboardAvoidingView
